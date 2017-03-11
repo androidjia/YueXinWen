@@ -1,6 +1,8 @@
 package com.zexh.yuexinwen;
 
+import android.app.Notification;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,9 +17,11 @@ import android.widget.Toast;
 import com.zexh.yuexinwen.JPush.ExampleUtil;
 import com.zexh.yuexinwen.JPush.PushSetActivity;
 
+import cn.jpush.android.api.BasicPushNotificationBuilder;
+import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.InstrumentedActivity;
 import cn.jpush.android.api.JPushInterface;
-public class MainActivity extends InstrumentedActivity {
+public class MainActivity extends AppCompatActivity {
 
 //    private Button mInit;
 //    private Button mSetting;
@@ -33,9 +37,13 @@ public class MainActivity extends InstrumentedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+
      //   initView();
      //   registerMessageReceiver();  // used for receive msg
+
+
     }
+
 
 //    private void initView(){
 //        TextView mImei = (TextView) findViewById(R.id.tv_imei);
@@ -107,6 +115,7 @@ public class MainActivity extends InstrumentedActivity {
 //                break;
 //        }
 //    }
+
 
     // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。
     private void init(){
