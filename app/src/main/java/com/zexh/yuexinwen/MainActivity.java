@@ -138,8 +138,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         button_home = (RadioButton) findViewById(R.id.main_homepage);
         botton_sendMessage = (RadioButton) findViewById(R.id.main_sendMessage);
         botton_yule = (RadioButton) findViewById(R.id.main_yule);
-        homeFragment = new HomeFragment(getApplicationContext());
-        funFragment = new FunFragment(getApplicationContext());
+        homeFragment = new HomeFragment(MainActivity.this);
+        funFragment = new FunFragment(MainActivity.this);
         chatFragment = new ChatFragment(MainActivity.this);
         button_home.setEnabled(false);
         transaction = fragmentManager.beginTransaction();
