@@ -4,14 +4,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zexh.yuexinwen.MainActivity">
-
-
-        <TextView
+<LinearLayout
+    android:id="@+id/mian_lin_bottom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    android:background="@color/linalayout_bottom_background"
+    >
+        <RadioGroup
+            android:id="@+id/main_bottom_radio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="hello,welcome to city"
-            android:textSize="18sp"/>
+            android:paddingTop="5dp"
+            android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/main_homepage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/homepagetext"
+                    android:gravity="center"
+                    android:drawableTop="@drawable/main_homepage"
+                    android:clickable="true"
+                    android:button="@null"
+                    />
+                <RadioButton
+                    android:id="@+id/main_yule"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/yule"
+                    android:gravity="center"
+                    android:drawableTop="@drawable/main_yule"
+                    android:clickable="true"
+                    android:button="@null"/>
+                <RadioButton
+                    android:id="@+id/main_sendMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/sendMessagetest"
+                    android:gravity="center"
+                    android:drawableTop="@drawable/main_sendmessage"
+                    android:clickable="true"
+                    android:button="@null"/>
+        </RadioGroup>
 
+</LinearLayout>
 
+<LinearLayout
+    android:id="@+id/main_lin_top"
+    android:layout_above="@+id/mian_lin_bottom"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="5dp">
+        <FrameLayout
+            android:id="@+id/main_top_framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+        <!--<fragment-->
+            <!--android:id="@+id/main_top_fragment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+        <!--</fragment>-->
+</LinearLayout>
 
 </RelativeLayout>

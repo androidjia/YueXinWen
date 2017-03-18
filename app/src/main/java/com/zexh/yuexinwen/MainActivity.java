@@ -2,6 +2,9 @@ package com.zexh.yuexinwen;
 
 import android.app.Notification;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.content.BroadcastReceiver;
@@ -11,9 +14,14 @@ import android.content.IntentFilter;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zexh.yuexinwen.Fragment.ChatFragment;
+import com.zexh.yuexinwen.Fragment.FunFragment;
+import com.zexh.yuexinwen.Fragment.HomeFragment;
 import com.zexh.yuexinwen.JPush.ExampleUtil;
 import com.zexh.yuexinwen.JPush.PushSetActivity;
 
@@ -21,7 +29,7 @@ import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.InstrumentedActivity;
 import cn.jpush.android.api.JPushInterface;
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener{
 
 //    private Button mInit;
 //    private Button mSetting;
@@ -30,7 +38,13 @@ public class MainActivity extends AppCompatActivity {
 //    private Button mGetRid;
 //    private TextView mRegId;
 //    private EditText msgText;
-
+    private RadioGroup radioGroup;
+    private RadioButton button_home,botton_yule,botton_sendMessage;
+    FragmentManager fragmentManager ;
+    FragmentTransaction transaction;
+    HomeFragment homeFragment;
+    FunFragment funFragment;
+    ChatFragment chatFragment;
     public static boolean isForeground = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
      //   initView();
      //   registerMessageReceiver();  // used for receive msg
-
 
     }
 
@@ -119,9 +132,37 @@ public class MainActivity extends AppCompatActivity {
 
     // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。
     private void init(){
+        fragmentManager = getSupportFragmentManager();
+        radioGroup = (RadioGroup) findViewById(R.id.main_bottom_radio);
+        radioGroup.setOnCheckedChangeListener(this);
+        button_home = (RadioButton) findViewById(R.id.main_homepage);
+        botton_sendMessage = (RadioButton) findViewById(R.id.main_sendMessage);
+        botton_yule = (RadioButton) findViewById(R.id.main_yule);
+        homeFragment = new HomeFragment(getApplicationContext());
+        funFragment = new FunFragment(getApplicationContext());
+        chatFragment = new ChatFragment(MainActivity.this);
+        button_home.setEnabled(false);
+        transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.main_top_framelayout,homeFragment);
+        transaction.add(R.id.main_top_framelayout,funFragment);
+        transaction.add(R.id.main_top_framelayout,chatFragment);
+        initFragmenthint();
+        transaction.show(homeFragment);
+        transaction.commit();
         JPushInterface.init(getApplicationContext());
     }
 
+    private void initFragmenthint() {
+        transaction.hide(homeFragment);
+        transaction.hide(funFragment);
+        transaction.hide(chatFragment);
+    }
+
+    private void initEnabled(){
+       button_home.setEnabled(true);
+       botton_sendMessage.setEnabled(true);
+       botton_yule.setEnabled(true);
+   }
     @Override
     public void onStop() {
         JPushInterface.stopPush(getApplicationContext());
@@ -156,6 +197,35 @@ public class MainActivity extends AppCompatActivity {
     public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        transaction = fragmentManager.beginTransaction();
+        switch (i){
+            case R.id.main_homepage:
+                initEnabled();
+                button_home.setEnabled(false);
+                initFragmenthint();
+                transaction.show(homeFragment);
+                transaction.commit();
+                break;
+            case R.id.main_yule:
+                initEnabled();
+                botton_yule.setEnabled(false);
+                initFragmenthint();
+                transaction.show(funFragment);
+                transaction.commit();
+                break;
+            case R.id.main_sendMessage:
+                initEnabled();
+                botton_sendMessage.setEnabled(false);
+                initFragmenthint();
+                transaction.show(chatFragment);
+                transaction.commit();
+                break;
+
+        }
+    }
 
 //    public void registerMessageReceiver() {
 //        mMessageReceiver = new MessageReceiver();
